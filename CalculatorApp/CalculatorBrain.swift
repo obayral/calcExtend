@@ -9,11 +9,23 @@
 import Foundation
 
 class CalculatorBrain{
-
+    
+    private var firstNumber:Double? = nil
+    private var currentOperation:String! = nil
     private var accumulator = 0.0
     func setOperand(operand: Double){
       accumulator = operand
     }
+    func sum(operand1:Double,operand2:Double)->Double{
+        return operand1+operand2
+    }
+    func multiply(operand1:Double,operand2:Double)->Double{
+        return operand1*operand2
+    }
+    func subtract(operand1:Double,operand2:Double)->Double{
+        return operand1-operand2
+    }
+    var operandList = Array<Double>()
     func performOperation(symbol: String){
         switch symbol{
         case "π":
@@ -24,6 +36,24 @@ class CalculatorBrain{
             accumulator = M_E
         case "AC":
             accumulator = 0
+        case "+":
+            firstNumber = accumulator
+            currentOperation = "+"
+        case "-":
+            firstNumber = accumulator
+            currentOperation = "-"
+        case "*":
+            firstNumber = accumulator
+            currentOperation = "x"
+        case "=":
+            if currentOperation == "+"{
+                accumulator=sum(operand1: firstNumber!, operand2: accumulator)
+            }else if currentOperation == "x"{
+                accumulator=multiply(operand1: firstNumber!, operand2: accumulator)
+            }
+            else if currentOperation == "-"{
+                accumulator=subtract(operand1: firstNumber!, operand2: accumulator)
+            }
         default:
             break
         }
