@@ -17,12 +17,18 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var label: UILabel!
     
+    //Boolean Var declaration whether user is writing or not
     private var userCurrentlyTyping = false
+    //Boolean Var declaration whether a decimal sign exists or not
     private var hasDecimal = false
     
+    //the function that recognizes the digit via UIButton
     @IBAction private func touchDigit(_ sender: UIButton) {
+        
+        //Declaring a digit constant, it is an unwrapped optional String
         let digit = sender.currentTitle!
         
+        //Appending algorithm for numbers and for the decimal point
         if userCurrentlyTyping{
             if hasDecimal == false{
                 let textCurrentlyInDisplay = label.text!
@@ -36,16 +42,15 @@ class ViewController: UIViewController {
         } else{
             if hasDecimal == false && digit == "." {
                 label.text = label.text! + digit
-                userCurrentlyTyping = true
                 hasDecimal = true
             }else{
                 label.text = digit
-                userCurrentlyTyping = true
             }
         }
-        
+        userCurrentlyTyping = true
     }
     
+    //Core Calculating Algorithm
     @IBAction func operate(_ sender: UIButton) {
         let operation = sender.currentTitle!
         switch operation{
@@ -82,6 +87,8 @@ class ViewController: UIViewController {
     
     }
     
+    //Declaring a type func which takes 2 Double parameters and returns 1 Double parameter.
+    //This is for binary operations.
     func performBinaryOperation(operation:(Double,Double)->Double){
         if operandStack.count >= 2 {
             displayValue = operation(operandStack.removeLast(),operandStack.removeLast())
@@ -89,6 +96,8 @@ class ViewController: UIViewController {
         }
     }
     
+    //Declaring a type func which takes 1 Double parameter and returns 1 Double parameter.
+    //This is for binary operations.
     func performUnaryOperation(operation:(Double)->Double){
         if operandStack.count >= 1 {
             displayValue = operation(operandStack.removeLast())
@@ -96,14 +105,17 @@ class ViewController: UIViewController {
         }
     }
     
+    //Array Declaration to put the numbers in a stack
     var operandStack = Array<Double>()
     
+    //When enter button pressed, the value within Label is appended to the stack
     @IBAction func enter() {
         userCurrentlyTyping = false
         operandStack.append(displayValue)
-        print("operandStack  \(operandStack)")
+        print("operandStack \(operandStack)")
     }
     
+    //Declaring a computed property in type Double to trace the value of displayLabel
     private var displayValue: Double{
         get{
             return Double(label.text!)!
@@ -113,7 +125,9 @@ class ViewController: UIViewController {
             userCurrentlyTyping = false
         }
     }
-     var displayIntValue: Int{
+    
+    //Declaring a computed property in type Int to trace the value of displayLabel
+    var displayIntValue: Int{
         get{
             return Int(label.text!)!
         }
