@@ -17,6 +17,20 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var label: UILabel!
     
+    private var numberInStack = 0.0
+    private var previousOperation:String!
+    private var currentValue = 0.0
+    private var currentOperation:String!
+    
+    func setOperand(operand: Double){
+        currentValue = operand
+    }
+    var result:Double{
+        get{
+            return currentValue
+        }
+    }
+    
     //Boolean Var declaration whether user is writing or not
     private var userCurrentlyTyping = false
     //Boolean Var declaration whether a decimal sign exists or not
@@ -52,36 +66,102 @@ class ViewController: UIViewController {
     
     //Core Calculating Algorithm
     @IBAction func operate(_ sender: UIButton) {
+        if userCurrentlyTyping {
+            setOperand(operand: displayValue)
+            userCurrentlyTyping = false
+        }
         let operation = sender.currentTitle!
         switch operation{
         case "+":
-            performBinaryOperation(operation:{$0+$1})
+            if currentOperation != previousOperation || previousOperation==nil{
+                numberInStack=currentValue
+            }
+            currentOperation = "+"
+            
         case "-":
-            performBinaryOperation(operation:{$1-$0})
+            if currentOperation != previousOperation || previousOperation==nil{
+                numberInStack=currentValue
+            }
+            currentOperation = "-"
         case "x":
-            performBinaryOperation(operation:{$0*$1})
+            if currentOperation != previousOperation || previousOperation==nil{
+                numberInStack=currentValue
+            }
+            currentOperation = "x"
         case "/":
-            performBinaryOperation(operation:{$1/$0})
+            if currentOperation != previousOperation || previousOperation==nil{
+                numberInStack=currentValue
+            }
+            currentOperation = "/"
         case "√":
-            performUnaryOperation(operation:{sqrt($0)})
+            currentOperation = "√"
+            if currentOperation != previousOperation || previousOperation==nil{
+                numberInStack=currentValue
+            }
+            if numberInStack.isLess(than: 0.0){
+                label.text! = String(sqrt(currentValue)) + "i"
+            }
+            else{
+                performUnaryOperation(operation:{sqrt($0)})
+            }
+            previousOperation = currentOperation
+        case "cos":
+            numberInStack=currentValue
+            performUnaryOperation(operation:{cos($0)})
+            previousOperation = "cos"
+        case "sin":
+            numberInStack=currentValue
+            performUnaryOperation(operation:{sin($0)})
+            previousOperation = "sin"
+        case "%":
+            numberInStack=currentValue
+            performUnaryOperation(operation:{($0/100)})
+            previousOperation = "%"
+        case "+/-":
+            print("\(numberInStack)numberstack hoho")
+            if previousOperation == nil{
+                numberInStack=currentValue
+                print("buraya girdi")
+            }
+            print("buraya girmedi")
+            print("\(numberInStack)numberstack hehe")
+             print("\(currentValue)currentvalueee")
+            performUnaryOperation(operation: {($0 * -1)})
+            previousOperation = "+/-"
         case "AC":
-            operandStack.removeAll()
+            currentValue = 0.0
+            numberInStack = 0.0
             displayIntValue = 0
+            previousOperation = nil
+            currentOperation = nil
             hasDecimal = false
         case "π":
+            currentValue = Double.pi
             displayValue = Double.pi
             hasDecimal = true
         case "e":
+            currentValue = M_E
             displayValue = M_E
             hasDecimal = true
-        case "cos":
-            performUnaryOperation(operation:{cos($0)})
-        case "sin":
-            performUnaryOperation(operation:{sin($0)})
-        case "%":
-            performUnaryOperation(operation:{($0/100)})
-        case "+/-":
-            displayValue.negate()
+        case "=":
+            if label.text!.contains("i")  {
+                label.text! = "Error"
+            }
+            if currentOperation == "+"{
+               previousOperation = "+"
+               performBinaryOperation(operation:{$0+$1})
+            }else if currentOperation == "-"{
+                previousOperation = "-"
+                performBinaryOperation(operation:{$0-$1})
+            }
+            else if currentOperation == "x"{
+                previousOperation = "x"
+                performBinaryOperation(operation:{$0*$1})
+            }
+            else if currentOperation == "/"{
+                previousOperation = "/"
+                performBinaryOperation(operation:{$0/$1})
+            }
         default: break
         }
     
@@ -90,30 +170,30 @@ class ViewController: UIViewController {
     //Declaring a type func which takes 2 Double parameters and returns 1 Double parameter.
     //This is for binary operations.
     func performBinaryOperation(operation:(Double,Double)->Double){
-        if operandStack.count >= 2 {
-            displayValue = operation(operandStack.removeLast(),operandStack.removeLast())
-            enter()
-        }
+            displayValue = operation(numberInStack,currentValue)
+            numberInStack = displayValue
     }
     
     //Declaring a type func which takes 1 Double parameter and returns 1 Double parameter.
     //This is for binary operations.
     func performUnaryOperation(operation:(Double)->Double){
-        if operandStack.count >= 1 {
-            displayValue = operation(operandStack.removeLast())
-            enter()
+        if previousOperation == nil {
+            displayValue = operation(numberInStack)
+        }else if previousOperation != nil{
+            print("\(numberInStack)numberstack lala")
+            displayValue = operation(currentValue)
+            print("\(displayValue) displayvalue lulu")
         }
+        numberInStack = displayValue
+        currentValue = displayValue
+        print("\(numberInStack) numberstack hehe")
+       
     }
     
     //Array Declaration to put the numbers in a stack
-    var operandStack = Array<Double>()
+    
     
     //When enter button pressed, the value within Label is appended to the stack
-    @IBAction func enter() {
-        userCurrentlyTyping = false
-        operandStack.append(displayValue)
-        print("operandStack \(operandStack)")
-    }
     
     //Declaring a computed property in type Double to trace the value of displayLabel
     private var displayValue: Double{
