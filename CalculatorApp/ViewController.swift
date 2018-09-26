@@ -48,8 +48,6 @@ class ViewController: UIViewController {
         
         //Declaring a digit constant, it is an unwrapped optional String
         let digit = sender.currentTitle!
-        print("\(label.text!) label value")
-        print("\(displayValue) label value")
         
         //if decimal sign exists in the label then hasDecimal is set to true
         if label.text!.contains("."){
@@ -86,7 +84,7 @@ class ViewController: UIViewController {
         }
         let operation = sender.currentTitle!
         switch operation{
-        
+            
         //Binary Operations, if it is the first time with the op, then currentValue becomes numberInStack
         case "+":
             if previousOperation==nil{
@@ -108,7 +106,7 @@ class ViewController: UIViewController {
                 numberInStack=currentValue
             }
             currentOperation = "/"
-        
+            
         //performing the BinaryOperations
         case "=":
             if currentOperation == "+"{
@@ -126,7 +124,7 @@ class ViewController: UIViewController {
                 previousOperation = "/"
                 performBinaryOperation(operation:{$0/$1})
             }
-        
+            
         //Unary Operations, if it is the first time with the op, then currentValue becomes numberInStack
         case "√":
             if previousOperation==nil{
@@ -186,8 +184,8 @@ class ViewController: UIViewController {
     //Declaring a type func which takes 2 Double parameters and returns 1 Double parameter.
     //This is for binary operations.
     func performBinaryOperation(operation:(Double,Double)->Double){
-            displayValue = operation(numberInStack,currentValue)
-            numberInStack = displayValue
+        displayValue = operation(numberInStack,currentValue)
+        numberInStack = displayValue
     }
     
     //Declaring a type func which takes 1 Double parameter and returns 1 Double parameter.
@@ -219,9 +217,7 @@ class ViewController: UIViewController {
             label.text! = String(newValue)
             userCurrentlyTyping = false
         }
-        
     }
-    
 }
 
 
