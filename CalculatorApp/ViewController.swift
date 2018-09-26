@@ -17,14 +17,21 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var label: UILabel!
     
+    //Double var declaration in order to represent the number in stack(number that waits to be operated)
     private var numberInStack = 0.0
+    //Unwrapped String var declation to represent the previous operation
     private var previousOperation:String!
+    //Double var declaration in order to represent the current number
     private var currentValue = 0.0
+    //Unwrapped String var declation to represent the current operation
     private var currentOperation:String!
     
+    //function that sets the operand value to currentValue
     func setOperand(operand: Double){
         currentValue = operand
     }
+    
+    //computed propert declaration, the result can only be gotten
     var result:Double{
         get{
             return currentValue
@@ -41,6 +48,13 @@ class ViewController: UIViewController {
         
         //Declaring a digit constant, it is an unwrapped optional String
         let digit = sender.currentTitle!
+        print("\(label.text!) label value")
+        print("\(displayValue) label value")
+        
+        //if decimal sign exists in the label then hasDecimal is set to true
+        if label.text!.contains("."){
+            hasDecimal = true
+        }
         
         //Appending algorithm for numbers and for the decimal point
         if userCurrentlyTyping{
@@ -57,7 +71,7 @@ class ViewController: UIViewController {
             if hasDecimal == false && digit == "." {
                 label.text = label.text! + digit
                 hasDecimal = true
-            }else{
+            }else if digit != "." {
                 label.text = digit
             }
         }
@@ -72,62 +86,84 @@ class ViewController: UIViewController {
         }
         let operation = sender.currentTitle!
         switch operation{
+        
+        //Binary Operations, if it is the first time with the op, then currentValue becomes numberInStack
         case "+":
-            if currentOperation != previousOperation || previousOperation==nil{
+            if previousOperation==nil{
                 numberInStack=currentValue
             }
             currentOperation = "+"
-            
         case "-":
-            if currentOperation != previousOperation || previousOperation==nil{
+            if previousOperation==nil{
                 numberInStack=currentValue
             }
             currentOperation = "-"
         case "x":
-            if currentOperation != previousOperation || previousOperation==nil{
+            if previousOperation==nil{
                 numberInStack=currentValue
             }
             currentOperation = "x"
         case "/":
-            if currentOperation != previousOperation || previousOperation==nil{
+            if previousOperation==nil{
                 numberInStack=currentValue
             }
             currentOperation = "/"
+        
+        //performing the BinaryOperations
+        case "=":
+            if currentOperation == "+"{
+                previousOperation = "+"
+                performBinaryOperation(operation:{$0+$1})
+            }else if currentOperation == "-"{
+                previousOperation = "-"
+                performBinaryOperation(operation:{$0-$1})
+            }
+            else if currentOperation == "x"{
+                previousOperation = "x"
+                performBinaryOperation(operation:{$0*$1})
+            }
+            else if currentOperation == "/"{
+                previousOperation = "/"
+                performBinaryOperation(operation:{$0/$1})
+            }
+        
+        //Unary Operations, if it is the first time with the op, then currentValue becomes numberInStack
         case "√":
-            currentOperation = "√"
-            if currentOperation != previousOperation || previousOperation==nil{
+            if previousOperation==nil{
                 numberInStack=currentValue
             }
+            //square root of negative numbers are represented with imaginary numbers
             if numberInStack.isLess(than: 0.0){
-                label.text! = String(sqrt(currentValue)) + "i"
+                label.text! = String(sqrt(numberInStack * -1)) + "i"
             }
             else{
                 performUnaryOperation(operation:{sqrt($0)})
+                currentOperation = "√"
             }
-            previousOperation = currentOperation
         case "cos":
-            numberInStack=currentValue
-            performUnaryOperation(operation:{cos($0)})
-            previousOperation = "cos"
-        case "sin":
-            numberInStack=currentValue
-            performUnaryOperation(operation:{sin($0)})
-            previousOperation = "sin"
-        case "%":
-            numberInStack=currentValue
-            performUnaryOperation(operation:{($0/100)})
-            previousOperation = "%"
-        case "+/-":
-            print("\(numberInStack)numberstack hoho")
-            if previousOperation == nil{
+            if previousOperation==nil{
                 numberInStack=currentValue
-                print("buraya girdi")
             }
-            print("buraya girmedi")
-            print("\(numberInStack)numberstack hehe")
-             print("\(currentValue)currentvalueee")
+            performUnaryOperation(operation:{cos($0)})
+            currentOperation = "cos"
+        case "sin":
+            if previousOperation==nil{
+                numberInStack=currentValue
+            }
+            performUnaryOperation(operation:{sin($0)})
+            currentOperation = "sin"
+        case "%":
+            if previousOperation==nil{
+                numberInStack=currentValue
+            }
+            performUnaryOperation(operation:{($0/100)})
+            currentOperation = "%"
+        case "+/-":
+            if previousOperation==nil{
+                numberInStack=currentValue
+            }
             performUnaryOperation(operation: {($0 * -1)})
-            previousOperation = "+/-"
+            currentOperation = "+/-"
         case "AC":
             currentValue = 0.0
             numberInStack = 0.0
@@ -143,28 +179,8 @@ class ViewController: UIViewController {
             currentValue = M_E
             displayValue = M_E
             hasDecimal = true
-        case "=":
-            if label.text!.contains("i")  {
-                label.text! = "Error"
-            }
-            if currentOperation == "+"{
-               previousOperation = "+"
-               performBinaryOperation(operation:{$0+$1})
-            }else if currentOperation == "-"{
-                previousOperation = "-"
-                performBinaryOperation(operation:{$0-$1})
-            }
-            else if currentOperation == "x"{
-                previousOperation = "x"
-                performBinaryOperation(operation:{$0*$1})
-            }
-            else if currentOperation == "/"{
-                previousOperation = "/"
-                performBinaryOperation(operation:{$0/$1})
-            }
         default: break
         }
-    
     }
     
     //Declaring a type func which takes 2 Double parameters and returns 1 Double parameter.
@@ -177,23 +193,11 @@ class ViewController: UIViewController {
     //Declaring a type func which takes 1 Double parameter and returns 1 Double parameter.
     //This is for binary operations.
     func performUnaryOperation(operation:(Double)->Double){
-        if previousOperation == nil {
-            displayValue = operation(numberInStack)
-        }else if previousOperation != nil{
-            print("\(numberInStack)numberstack lala")
-            displayValue = operation(currentValue)
-            print("\(displayValue) displayvalue lulu")
-        }
+        displayValue = operation(numberInStack)
         numberInStack = displayValue
         currentValue = displayValue
-        print("\(numberInStack) numberstack hehe")
-       
+        previousOperation = currentOperation
     }
-    
-    //Array Declaration to put the numbers in a stack
-    
-    
-    //When enter button pressed, the value within Label is appended to the stack
     
     //Declaring a computed property in type Double to trace the value of displayLabel
     private var displayValue: Double{
