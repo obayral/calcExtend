@@ -1,13 +1,16 @@
 //
 //  ViewController.swift
 //  CalculatorApp
-//
+//  StudentID: 301029119
 //  Created by Oguz Bayral on 22.09.2018.
 //  Copyright © 2018 CentennialCollege. All rights reserved.
-//
+//  Version 1.0.0
+//  CalculatorApp is created by Oguz Bayral to perfrom some mathematical operations.
+//  CalculatorApp contains basic binary operations as well as some advanced unary operations.
 
 import UIKit
 
+//ViewController class declaration. It controls the UI and provide the view to respond to user.
 class ViewController: UIViewController {
     
     override func viewDidLoad() {
