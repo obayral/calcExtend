@@ -18,9 +18,6 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
-    
-    
-    
     @IBOutlet weak var buttonPi: UIButton!
     @IBOutlet weak var buttonCos: UIButton!
     @IBOutlet weak var buttonSin: UIButton!
