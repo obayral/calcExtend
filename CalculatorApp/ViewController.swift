@@ -18,6 +18,32 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
     
+    
+    
+    @IBOutlet weak var buttonEuler: UIButton!
+    @IBOutlet weak var buttonPi: UIButton!
+    @IBOutlet weak var buttonCos: UIButton!
+    @IBOutlet weak var buttonSin: UIButton!
+    @IBOutlet weak var buttonPerCent: UIButton!
+    @IBOutlet weak var buttonNegate: UIButton!
+    @IBOutlet weak var buttonPlus: UIButton!
+    @IBOutlet weak var buttonDivide: UIButton!
+    @IBOutlet weak var buttonMinus: UIButton!
+    @IBOutlet weak var buttonMultiply: UIButton!
+    @IBOutlet weak var buttonEquals: UIButton!
+    @IBOutlet weak var button0: UIButton!
+    @IBOutlet weak var button1: UIButton!
+    @IBOutlet weak var button2: UIButton!
+    @IBOutlet weak var button3: UIButton!
+    @IBOutlet weak var button4: UIButton!
+    @IBOutlet weak var button5: UIButton!
+    @IBOutlet weak var button6: UIButton!
+    @IBOutlet weak var button7: UIButton!
+    @IBOutlet weak var button8: UIButton!
+    @IBOutlet weak var button9: UIButton!
+    @IBOutlet weak var buttonDecimal: UIButton!
+    @IBOutlet weak var buttonSquare: UIButton!
+    
     @IBOutlet weak var label: UILabel!
     
     //Double var declaration in order to represent the number in stack(number that waits to be operated)
@@ -32,6 +58,60 @@ class ViewController: UIViewController {
     //function that sets the operand value to currentValue
     func setOperand(operand: Double){
         currentValue = operand
+    }
+    
+    //function that enables all the buttons
+    func enableButtons(){
+        buttonCos.isEnabled = true
+        buttonSin.isEnabled = true
+        buttonPerCent.isEnabled=true
+        buttonNegate.isEnabled=true
+        buttonEuler.isEnabled=true
+        buttonPi.isEnabled=true
+        buttonDivide.isEnabled=true
+        buttonPlus.isEnabled=true
+        buttonMinus.isEnabled=true
+        buttonMultiply.isEnabled=true
+        buttonEquals.isEnabled=true
+        buttonSquare.isEnabled=true
+        buttonDecimal.isEnabled=true
+        button0.isEnabled=true
+        button1.isEnabled=true
+        button2.isEnabled=true
+        button3.isEnabled=true
+        button4.isEnabled=true
+        button5.isEnabled=true
+        button6.isEnabled=true
+        button7.isEnabled=true
+        button8.isEnabled=true
+        button9.isEnabled=true
+    }
+    
+    //function that disables all the buttons
+    func disableButtons(){
+        buttonCos.isEnabled = false
+        buttonSin.isEnabled = false
+        buttonPerCent.isEnabled=false
+        buttonNegate.isEnabled=false
+        buttonEuler.isEnabled=false
+        buttonPi.isEnabled=false
+        buttonDivide.isEnabled=false
+        buttonPlus.isEnabled=false
+        buttonMinus.isEnabled=false
+        buttonMultiply.isEnabled=false
+        buttonEquals.isEnabled=false
+        buttonSquare.isEnabled = false
+        buttonDecimal.isEnabled=false
+        button0.isEnabled=false
+        button1.isEnabled=false
+        button2.isEnabled=false
+        button3.isEnabled=false
+        button4.isEnabled=false
+        button5.isEnabled=false
+        button6.isEnabled=false
+        button7.isEnabled=false
+        button8.isEnabled=false
+        button9.isEnabled=false
     }
     
     //computed propert declaration, the result can only be gotten
@@ -90,6 +170,7 @@ class ViewController: UIViewController {
             
         //Binary Operations, if it is the first time with the op, then currentValue becomes numberInStack
         case "+":
+            print("pressed")
             if previousOperation==nil{
                 numberInStack=currentValue
             }
@@ -136,6 +217,7 @@ class ViewController: UIViewController {
             //square root of negative numbers are represented with imaginary numbers
             if numberInStack.isLess(than: 0.0){
                 label.text! = String(sqrt(numberInStack * -1)) + "i"
+                disableButtons()
             }
             else{
                 performUnaryOperation(operation:{sqrt($0)})
@@ -172,6 +254,7 @@ class ViewController: UIViewController {
             previousOperation = nil
             currentOperation = nil
             hasDecimal = false
+            enableButtons()
         case "π":
             currentValue = Double.pi
             displayValue = Double.pi

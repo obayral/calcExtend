@@ -13,6 +13,8 @@
 		ED3267602156CB3800997E27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED32675F2156CB3800997E27 /* Assets.xcassets */; };
 		ED3267632156CB3800997E27 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = ED3267612156CB3800997E27 /* LaunchScreen.storyboard */; };
 		EDA65740215C56AA00365E14 /* launchPage.png in Resources */ = {isa = PBXBuildFile; fileRef = EDA6573F215C56A900365E14 /* launchPage.png */; };
+		EDDAA386215DA21E001D9012 /* nature.png in Resources */ = {isa = PBXBuildFile; fileRef = EDDAA385215DA21D001D9012 /* nature.png */; };
+		EDDAA388215DAAA2001D9012 /* equations.png in Resources */ = {isa = PBXBuildFile; fileRef = EDDAA387215DAAA1001D9012 /* equations.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		ED3267622156CB3800997E27 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		ED3267642156CB3800997E27 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDA6573F215C56A900365E14 /* launchPage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = launchPage.png; path = ../../../Desktop/launchPage.png; sourceTree = "<group>"; };
+		EDDAA385215DA21D001D9012 /* nature.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = nature.png; path = ../../../Desktop/nature.png; sourceTree = "<group>"; };
+		EDDAA387215DAAA1001D9012 /* equations.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = equations.png; path = ../../../Desktop/equations.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +66,8 @@
 				ED32675F2156CB3800997E27 /* Assets.xcassets */,
 				ED3267612156CB3800997E27 /* LaunchScreen.storyboard */,
 				EDA6573F215C56A900365E14 /* launchPage.png */,
+				EDDAA385215DA21D001D9012 /* nature.png */,
+				EDDAA387215DAAA1001D9012 /* equations.png */,
 				ED3267642156CB3800997E27 /* Info.plist */,
 			);
 			path = CalculatorApp;
@@ -125,10 +131,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDDAA386215DA21E001D9012 /* nature.png in Resources */,
 				ED3267632156CB3800997E27 /* LaunchScreen.storyboard in Resources */,
 				EDA65740215C56AA00365E14 /* launchPage.png in Resources */,
 				ED3267602156CB3800997E27 /* Assets.xcassets in Resources */,
 				ED32675E2156CB3500997E27 /* Main.storyboard in Resources */,
+				EDDAA388215DAAA2001D9012 /* equations.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
