@@ -20,7 +20,7 @@ class ViewController: UIViewController {
     
     
     
-    @IBOutlet weak var buttonEuler: UIButton!
+    
     @IBOutlet weak var buttonPi: UIButton!
     @IBOutlet weak var buttonCos: UIButton!
     @IBOutlet weak var buttonSin: UIButton!
@@ -66,7 +66,6 @@ class ViewController: UIViewController {
         buttonSin.isEnabled = true
         buttonPerCent.isEnabled=true
         buttonNegate.isEnabled=true
-        buttonEuler.isEnabled=true
         buttonPi.isEnabled=true
         buttonDivide.isEnabled=true
         buttonPlus.isEnabled=true
@@ -93,7 +92,6 @@ class ViewController: UIViewController {
         buttonSin.isEnabled = false
         buttonPerCent.isEnabled=false
         buttonNegate.isEnabled=false
-        buttonEuler.isEnabled=false
         buttonPi.isEnabled=false
         buttonDivide.isEnabled=false
         buttonPlus.isEnabled=false
@@ -258,10 +256,6 @@ class ViewController: UIViewController {
         case "π":
             currentValue = Double.pi
             displayValue = Double.pi
-            hasDecimal = true
-        case "e":
-            currentValue = M_E
-            displayValue = M_E
             hasDecimal = true
         default: break
         }
