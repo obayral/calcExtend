@@ -13,10 +13,43 @@ import UIKit
 //ViewController class declaration. It controls the UI and provide the view to respond to user.
 class ViewController: UIViewController {
     
+   var backgroundColor:String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        if backgroundColor == "Red"{
+            self.view.backgroundColor = UIColor.red
+            label.backgroundColor = UIColor.red
+        }
+        if backgroundColor == "Yellow"{
+            self.view.backgroundColor = UIColor.yellow
+            label.backgroundColor = UIColor.yellow
+        }
+        if backgroundColor == "Green"{
+            self.view.backgroundColor = UIColor.green
+            label.backgroundColor = UIColor.green
+        }
+        if backgroundColor == "Blue"{
+            self.view.backgroundColor = UIColor.blue
+            label.backgroundColor = UIColor.blue
+        }
+        if backgroundColor == "Orange"{
+            self.view.backgroundColor = UIColor.orange
+            label.backgroundColor = UIColor.orange
+        }
+        if backgroundColor == "Purple"{
+            self.view.backgroundColor = UIColor.purple
+            label.backgroundColor = UIColor.purple
+        }
+        if backgroundColor == "White"{
+            self.view.backgroundColor = UIColor.white
+            label.backgroundColor = UIColor.white
+            label.textColor=UIColor.black
+        }
     }
+    
+    
     
     @IBOutlet weak var buttonPi: UIButton!
     @IBOutlet weak var buttonCos: UIButton!
@@ -123,6 +156,7 @@ class ViewController: UIViewController {
     
     //the function that recognizes the digit via UIButton
     @IBAction private func touchDigit(_ sender: UIButton) {
+        print(backgroundColor)
         
         //Declaring a digit constant, it is an unwrapped optional String
         let digit = sender.currentTitle!
